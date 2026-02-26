@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primäre Farben - Blau zu Türkis Gradient -->
+    <color name="primary_blue">#1E3A8A</color>
+    <color name="primary_dark_blue">#1E40AF</color>
+    <color name="primary_cyan">#0891B2</color>
+    <color name="primary_light_cyan">#06B6D4</color>
+    
+    <!-- Hintergrundfarben -->
+    <color name="background_main">#F0F9FF</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="surface_light">#F8FAFC</color>
+    
+    <!-- Transaktionsfarben -->
+    <color name="income_green">#10B981</color>
+    <color name="income_bg">#D1FAE5</color>
+    <color name="expense_red">#EF4444</color>
+    <color name="expense_bg">#FEE2E2</color>
+    
+    <!-- Textfarben -->
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#64748B</color>
+    <color name="text_white">#FFFFFF</color>
+    
+    <!-- Akzentfarben -->
+    <color name="accent_orange">#F59E0B</color>
+    <color name="border_light">#E2E8F0</color>
+</resources>
