@@ -3,16 +3,16 @@ package com.example.finance;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-
+import androidx.annotation.NonNull;
+import androidx.viewpager2.widget.ViewPager2;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UebersichtFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class UebersichtFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -25,18 +25,8 @@ public class UebersichtFragment extends Fragment {
     private String mParam2;
 
     public UebersichtFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UebersichtFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static UebersichtFragment newInstance(String param1, String param2) {
         UebersichtFragment fragment = new UebersichtFragment();
         Bundle args = new Bundle();
@@ -60,5 +50,34 @@ public class UebersichtFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_uebersicht, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TabLayout tabs = view.findViewById(R.id.tabs_period);
+        ViewPager2 pager = view.findViewById(R.id.pager_period);
+
+        pager.setAdapter(new FragmentStateAdapter(this) {
+            @NonNull
+            @Override
+            public androidx.fragment.app.Fragment createFragment(int position) {
+                if (position == 0) return new PaymentsHeuteFragment();
+                if (position == 1) return new PaymentsWocheFragment();
+                return new PaymentsMonatFragment();
+            }
+
+            @Override
+            public int getItemCount() {
+                return 3;
+            }
+        });
+
+        new TabLayoutMediator(tabs, pager, (tab, position) -> {
+            if (position == 0) tab.setText("Heute");
+            else if (position == 1) tab.setText("Diese Woche");
+            else tab.setText("Dieser Monat");
+        }).attach();
     }
 }
