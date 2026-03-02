@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/uebersichtFragment">
+
+    <fragment
+        android:id="@+id/uebersichtFragment"
+        android:name="com.example.finance.UebersichtFragment"
+        android:label="Übersicht" />
+
+    <fragment
+        android:id="@+id/analyseFragment"
+        android:name="com.example.finance.AnalyseFragment"
+        android:label="Analyse" />
+
+    <fragment
+        android:id="@+id/budgetplanungFragment"
+        android:name="com.example.finance.BudgetplanungFragment"
+        android:label="Budget" />
+
+    <fragment
+        android:id="@+id/sparzieleFragment"
+        android:name="com.example.finance.SparzieleFragment"
+        android:label="Sparziele" />
+
+</navigation>

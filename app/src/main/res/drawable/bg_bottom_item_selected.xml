@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ausgewählt -->
+    <item android:state_checked="true">
+        <shape android:shape="oval">
+            <solid android:color="#11FFFFFF"/>
+            <size
+                android:width="44dp"
+                android:height="44dp"/>
+        </shape>
+    </item>
+
+    <!-- nicht ausgewählt -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+
+</selector>

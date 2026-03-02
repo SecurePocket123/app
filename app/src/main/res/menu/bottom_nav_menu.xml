@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/uebersichtFragment"
+        android:icon="@drawable/ic_uebersicht"
+        android:title="Übersicht"/>
+
+    <item
+        android:id="@+id/analyseFragment"
+        android:icon="@drawable/ic_analyse"
+        android:title="Analyse"/>
+
+    <item
+        android:id="@+id/budgetplanungFragment"
+        android:icon="@drawable/ic_budget"
+        android:title="Budget"/>
+
+    <item
+        android:id="@+id/sparzieleFragment"
+        android:icon="@drawable/ic_sparziele"
+        android:title="Sparziele"/>
+
+</menu>
