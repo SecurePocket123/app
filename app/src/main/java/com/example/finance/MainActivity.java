@@ -15,10 +15,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Schritt 1: wir laden jetzt startseite.xml (nicht mehr activity_main.xml)
         setContentView(R.layout.startseite);
 
-        // Schritt 2: Bottom Navigation mit dem Navigation-Graph verbinden
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host);
 

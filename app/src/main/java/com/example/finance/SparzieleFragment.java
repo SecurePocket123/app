@@ -50,7 +50,7 @@ public class SparzieleFragment extends Fragment {
         etGoal.addTextChangedListener(watcher);
         etSaved.addTextChangedListener(watcher);
 
-        // Startwerte (optional)
+        // Startwerte (optional) -> mit Code Automatisieren
         etGoal.setText("4000");
         etSaved.setText("3000");
         updateUI();
