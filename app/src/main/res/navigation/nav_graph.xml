@@ -12,16 +12,33 @@
     <fragment
         android:id="@+id/analyseFragment"
         android:name="com.example.finance.AnalyseFragment"
-        android:label="Analyse" />
+        android:label="Analyse">
+
+        <action
+            android:id="@+id/action_analyseFragment_to_budgetplanungFragment"
+            app:destination="@id/budgetplanungFragment" />
+
+    </fragment>
 
     <fragment
-        android:id="@+id/budgetplanungFragment"
-        android:name="com.example.finance.BudgetplanungFragment"
-        android:label="Budget" />
+        android:id="@+id/inProgressFragment"
+        android:name="com.example.finance.InProgressFragment"
+        android:label="In Progress" />
 
     <fragment
         android:id="@+id/sparzieleFragment"
         android:name="com.example.finance.SparzieleFragment"
         android:label="Sparziele" />
+
+    <fragment
+        android:id="@+id/budgetplanungFragment"
+        android:name="com.example.finance.BudgetplanungFragment"
+        android:label="Budgetplanung">
+
+        <action
+            android:id="@+id/action_budgetplanungFragment_to_analyseFragment"
+            app:destination="@id/analyseFragment" />
+
+    </fragment>
 
 </navigation>
