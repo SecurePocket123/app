@@ -12,9 +12,9 @@
         android:title="Analyse" />
 
     <item
-        android:id="@+id/inProgressFragment"
+        android:id="@+id/kalenderFragment"
         android:icon="@drawable/ic_budget"
-        android:title="In Progress" />
+        android:title="Kalender" />
 
     <item
         android:id="@+id/sparzieleFragment"

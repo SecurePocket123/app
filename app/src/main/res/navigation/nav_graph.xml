@@ -21,9 +21,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/inProgressFragment"
-        android:name="com.example.finance.InProgressFragment"
-        android:label="In Progress" />
+        android:id="@+id/kalenderFragment"
+        android:name="com.example.finance.KalenderFragment"
+        android:label="Kalender" />
 
     <fragment
         android:id="@+id/sparzieleFragment"
