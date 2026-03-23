@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1976D2">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#1976D2"
+    android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Analyse"
-        android:textSize="28sp"
         android:textColor="@android:color/white"
-        android:layout_gravity="center"/>
-</FrameLayout>
+        android:textSize="26sp"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btn_open_budgetplanung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Budgetplanung öffnen" />
+
+</LinearLayout>

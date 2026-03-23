@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1976D2">
+    android:orientation="vertical"
+    android:background="#1976D2"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btn_back_to_analyse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zurück" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Budgetplanung"
-        android:textSize="26sp"
         android:textColor="@android:color/white"
-        android:layout_gravity="center"/>
-</FrameLayout>
+        android:textSize="26sp"
+        android:layout_marginTop="24dp" />
+
+</LinearLayout>
