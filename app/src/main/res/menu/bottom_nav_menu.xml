@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/kalenderFragment"
-        android:icon="@drawable/ic_budget"
+        android:icon="@android:drawable/ic_menu_view"
         android:title="Kalender" />
 
     <item
