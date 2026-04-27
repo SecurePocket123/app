@@ -44,6 +44,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             holder.tvDay.setText("");
             holder.itemView.setBackground(null);
             holder.tvDay.setTextColor(0x00FFFFFF);
+            holder.dotIndicator.setVisibility(View.INVISIBLE);
             holder.itemView.setOnClickListener(null);
             return;
         }
@@ -62,6 +63,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             holder.tvDay.setTextColor(0xFFFFFFFF);
         }
 
+        holder.dotIndicator.setVisibility(day.hasTransactions() ? View.VISIBLE : View.INVISIBLE);
         holder.itemView.setOnClickListener(v -> listener.onDayClick(day));
     }
 
@@ -72,10 +74,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
     static class CalendarViewHolder extends RecyclerView.ViewHolder {
         TextView tvDay;
+        View dotIndicator;
 
         public CalendarViewHolder(@NonNull View itemView) {
             super(itemView);
             tvDay = itemView.findViewById(R.id.tvDay);
+            dotIndicator = itemView.findViewById(R.id.viewTransactionDot);
         }
     }
 
