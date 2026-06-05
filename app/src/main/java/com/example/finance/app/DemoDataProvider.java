@@ -20,7 +20,8 @@ public class DemoDataProvider {
     private static boolean initialized = false;
 
     public static void seed(FinanceRepository repository) {
-        if (initialized) {
+        if (initialized || hasSavedData(repository)) {
+            initialized = true;
             return;
         }
 
@@ -45,16 +46,19 @@ public class DemoDataProvider {
         addAusgaben.ausfuehren(80.0, 4, heute, "Tanken", "Karte");
         addAusgaben.ausfuehren(20.0, 2, heute, "Bäckerei", "Bar");
 
-        addSparziel.ausfuehren("Neues Handy", 1000.0, heute.plusMonths(3));
+        Sparziel handy = new Sparziel("Neues Handy", 1000.0, heute.plusMonths(3));
+        handy.setAktuellerBetrag(300.0);
+        repository.addSparziel(handy);
         addSparziel.ausfuehren("Urlaub", 1500.0, heute.plusMonths(6));
         addSparziel.ausfuehren("Laptop", 1200.0, heute.plusMonths(4));
 
-        if (!repository.getSparziele().isEmpty()) {
-            Sparziel sparziel = repository.getSparziele().get(0);
-            sparziel.setAktuellerBetrag(300.0);
-        }
-
         initialized = true;
+    }
+
+    private static boolean hasSavedData(FinanceRepository repository) {
+        return !repository.getAlleZahlungen().isEmpty()
+                || !repository.getKategorien().isEmpty()
+                || !repository.getSparziele().isEmpty();
     }
 
     public static List<LaufenderVertrag> getBeispielVertraege() {

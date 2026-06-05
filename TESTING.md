@@ -66,3 +66,19 @@ https://services.gradle.org/distributions/gradle-9.1.0-bin.zip
 - Demo-Daten: `app/src/main/java/com/example/finance/app/DemoDataProvider.java`
 - App-Start/Seed: `app/src/main/java/com/example/finance/MainActivity.java`
 - ViewModels: `app/src/main/java/com/example/finance/viewmodel/`
+
+## 6. Lokale Speicherung
+
+Die App speichert Daten jetzt automatisch intern in dieser Datei:
+
+```text
+finance_data.json
+```
+
+Die Datei liegt im privaten App-Speicher. Android-Nutzer sehen sie normalerweise nicht direkt im Dateimanager.
+
+Verhalten:
+
+- Beim App-Start wird `finance_data.json` geladen.
+- Nach neuen Einnahmen, Ausgaben, Kategorien oder Sparzielen wird automatisch gespeichert.
+- Demo-Daten werden nur eingefügt, wenn noch keine gespeicherten Daten vorhanden sind.

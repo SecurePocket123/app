@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        AppContainer.init(getApplicationContext());
         DemoDataProvider.seed(AppContainer.getRepository());
         setContentView(R.layout.startseite);
 

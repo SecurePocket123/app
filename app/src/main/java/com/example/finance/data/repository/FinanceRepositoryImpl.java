@@ -1,10 +1,14 @@
 package com.example.finance.data.repository;
 
+import android.content.Context;
+
 import com.example.finance.data.model.Ausgaben;
 import com.example.finance.data.model.Einkommen;
 import com.example.finance.data.model.Kategorie;
 import com.example.finance.data.model.Sparziel;
 import com.example.finance.data.model.Zahlung;
+import com.example.finance.data.storage.FinanceSaveData;
+import com.example.finance.data.storage.FinanceStorage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,11 +16,12 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Einfache In-Memory-Implementierung.
- * Die Daten bleiben nur solange die App läuft.
+ * Einfache Repository-Implementierung.
+ * Mit Context werden die Daten zusätzlich in finance_data.json gespeichert.
  */
 public class FinanceRepositoryImpl implements FinanceRepository {
 
+    private FinanceStorage storage;
     private long nextPaymentId = 1;
     private long nextKategorieId = 1;
 
@@ -25,27 +30,39 @@ public class FinanceRepositoryImpl implements FinanceRepository {
     private List<Kategorie> kategorienListe = new ArrayList<>();
     private List<Sparziel> sparzieleListe = new ArrayList<>();
 
+    public FinanceRepositoryImpl() {
+    }
+
+    public FinanceRepositoryImpl(Context context) {
+        storage = new FinanceStorage(context);
+        loadFromStorage();
+    }
+
     @Override
     public void addEinkommen(Einkommen einkommen) {
         einkommen.setId(nextPaymentId++);
         einkommenListe.add(einkommen);
+        saveToStorage();
     }
 
     @Override
     public void addAusgaben(Ausgaben ausgaben) {
         ausgaben.setId(nextPaymentId++);
         ausgabenListe.add(ausgaben);
+        saveToStorage();
     }
 
     @Override
     public void addKategorie(Kategorie kategorie) {
         kategorie.setId(nextKategorieId++);
         kategorienListe.add(kategorie);
+        saveToStorage();
     }
 
     @Override
     public void addSparziel(Sparziel sparziel) {
         sparzieleListe.add(sparziel);
+        saveToStorage();
     }
 
     @Override
@@ -148,6 +165,35 @@ public class FinanceRepositoryImpl implements FinanceRepository {
     @Override
     public List<Sparziel> getSparziele() {
         return sparzieleListe;
+    }
+
+    private void loadFromStorage() {
+        if (storage == null) {
+            return;
+        }
+
+        FinanceSaveData data = storage.load();
+        nextPaymentId = data.getNextPaymentId();
+        nextKategorieId = data.getNextKategorieId();
+        einkommenListe = data.getEinkommenListe();
+        ausgabenListe = data.getAusgabenListe();
+        kategorienListe = data.getKategorienListe();
+        sparzieleListe = data.getSparzieleListe();
+    }
+
+    private void saveToStorage() {
+        if (storage == null) {
+            return;
+        }
+
+        FinanceSaveData data = new FinanceSaveData();
+        data.setNextPaymentId(nextPaymentId);
+        data.setNextKategorieId(nextKategorieId);
+        data.setEinkommenListe(einkommenListe);
+        data.setAusgabenListe(ausgabenListe);
+        data.setKategorienListe(kategorienListe);
+        data.setSparzieleListe(sparzieleListe);
+        storage.save(data);
     }
 
     private void sortiereZahlungenNachId(List<Zahlung> zahlungen) {

@@ -1,5 +1,7 @@
 package com.example.finance.app;
 
+import android.content.Context;
+
 import com.example.finance.data.repository.FinanceRepository;
 import com.example.finance.data.repository.FinanceRepositoryImpl;
 
@@ -8,9 +10,18 @@ import com.example.finance.data.repository.FinanceRepositoryImpl;
  */
 public class AppContainer {
 
-    private static final FinanceRepository repository = new FinanceRepositoryImpl();
+    private static FinanceRepository repository;
+
+    public static void init(Context context) {
+        if (repository == null) {
+            repository = new FinanceRepositoryImpl(context);
+        }
+    }
 
     public static FinanceRepository getRepository() {
+        if (repository == null) {
+            repository = new FinanceRepositoryImpl();
+        }
         return repository;
     }
 }
