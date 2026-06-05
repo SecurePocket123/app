@@ -104,13 +104,39 @@ public class FinanceRepositoryImpl implements FinanceRepository {
             ));
         }
 
-        Collections.sort(zahlungen, new Comparator<Zahlung>() {
-            @Override
-            public int compare(Zahlung zahlung1, Zahlung zahlung2) {
-                return Long.compare(zahlung2.getId(), zahlung1.getId());
-            }
-        });
+        sortiereZahlungenNachId(zahlungen);
+        return zahlungen;
+    }
 
+    @Override
+    public List<Zahlung> getAlleZahlungen() {
+        List<Zahlung> zahlungen = new ArrayList<>();
+
+        for (Einkommen einkommen : einkommenListe) {
+            zahlungen.add(new Zahlung(
+                    einkommen.getId(),
+                    einkommen.getKategorieId(),
+                    getKategorieName(einkommen.getKategorieId()),
+                    einkommen.getBeschreibung(),
+                    einkommen.getDatum(),
+                    einkommen.getBetrag(),
+                    true
+            ));
+        }
+
+        for (Ausgaben ausgabe : ausgabenListe) {
+            zahlungen.add(new Zahlung(
+                    ausgabe.getId(),
+                    ausgabe.getKategorieId(),
+                    getKategorieName(ausgabe.getKategorieId()),
+                    ausgabe.getBeschreibung(),
+                    ausgabe.getDatum(),
+                    ausgabe.getBetrag(),
+                    false
+            ));
+        }
+
+        sortiereZahlungenNachId(zahlungen);
         return zahlungen;
     }
 
@@ -122,6 +148,15 @@ public class FinanceRepositoryImpl implements FinanceRepository {
     @Override
     public List<Sparziel> getSparziele() {
         return sparzieleListe;
+    }
+
+    private void sortiereZahlungenNachId(List<Zahlung> zahlungen) {
+        Collections.sort(zahlungen, new Comparator<Zahlung>() {
+            @Override
+            public int compare(Zahlung zahlung1, Zahlung zahlung2) {
+                return Long.compare(zahlung2.getId(), zahlung1.getId());
+            }
+        });
     }
 
     private String getKategorieName(long kategorieId) {

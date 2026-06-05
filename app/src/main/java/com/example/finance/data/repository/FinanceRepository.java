@@ -28,6 +28,8 @@ public interface FinanceRepository {
 
     List<Zahlung> getZahlungen(int monat, int jahr);
 
+    List<Zahlung> getAlleZahlungen();
+
     List<Kategorie> getKategorien();
 
     List<Sparziel> getSparziele();
