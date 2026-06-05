@@ -4,7 +4,6 @@ import com.example.finance.data.model.Ausgaben;
 import com.example.finance.data.model.Einkommen;
 import com.example.finance.data.model.Kategorie;
 import com.example.finance.data.model.Sparziel;
-import com.example.finance.data.model.Zahlung;
 
 import java.util.List;
 
@@ -25,10 +24,6 @@ public interface FinanceRepository {
     List<Einkommen> getEinkommen(int monat, int jahr);
 
     List<Ausgaben> getAusgaben(int monat, int jahr);
-
-    List<Zahlung> getZahlungen(int monat, int jahr);
-
-    List<Zahlung> getAlleZahlungen();
 
     List<Kategorie> getKategorien();
 

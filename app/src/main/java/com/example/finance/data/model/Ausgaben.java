@@ -22,10 +22,6 @@ public class Ausgaben { // Kommentare identisch zu Klasse Einkommen bis auf Paym
     public long getId() {
         return id;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
     public double getBetrag() {
         return betrag;
     }
