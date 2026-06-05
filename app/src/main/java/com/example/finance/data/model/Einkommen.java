@@ -23,6 +23,10 @@ public class Einkommen {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public double getBetrag() {
         return betrag;
     }
@@ -38,6 +42,4 @@ public class Einkommen {
     public String getBeschreibung() {
         return beschreibung;
     }
-
-    // setter noch nicht gesetzt weil keine Ahnung wofür (maybe für testwerte aber dann eigentlich per Datenbank eingabe testen)
 }

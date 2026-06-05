@@ -13,18 +13,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.finance.data.model.LaufenderVertrag;
-import com.example.finance.domain.calculator.GetLaufendeVertraegeUseCase;
 import com.example.finance.domain.calculator.VertragsAnalyseDaten;
+import com.example.finance.viewmodel.AnalyseViewModel;
 import com.google.android.material.card.MaterialCardView;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class AnalyseFragment extends Fragment {
@@ -65,32 +64,11 @@ public class AnalyseFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_analyseFragment_to_budgetplanungFragment)
         );
 
-        List<LaufenderVertrag> vertraege = erstelleBeispielVertraege();
-        zeigeVertraege(vertraege);
+        AnalyseViewModel viewModel = new ViewModelProvider(this).get(AnalyseViewModel.class);
+        zeigeVertraege(viewModel.getVertragsAnalyseDaten());
     }
 
-    private List<LaufenderVertrag> erstelleBeispielVertraege() {
-        LocalDate heute = LocalDate.now();
-        LocalDate monatsStart = heute.withDayOfMonth(1);
-
-        List<LaufenderVertrag> vertraege = new ArrayList<>();
-        vertraege.add(new LaufenderVertrag("Miete", "Wohnen", 650.00, 1, monatsStart.withDayOfMonth(1)));
-        vertraege.add(new LaufenderVertrag("Handyvertrag", "Kommunikation", 29.99, 1, monatsStart.withDayOfMonth(5)));
-        vertraege.add(new LaufenderVertrag("Netflix", "Streaming", 12.99, 1, monatsStart.withDayOfMonth(18)));
-        vertraege.add(new LaufenderVertrag("Fitnessstudio", "Freizeit", 34.90, 1, monatsStart.withDayOfMonth(25)));
-
-        // Beispiel für eine Abbuchung, die nicht jeden Monat fällig ist.
-        // Dadurch landet GEZ/Rundfunkbeitrag in einem getrennten Bereich.
-        vertraege.add(new LaufenderVertrag("Rundfunkbeitrag (GEZ)", "Haushalt", 55.08, 3,
-                monatsStart.plusMonths(1).withDayOfMonth(15)));
-
-        vertraege.add(new LaufenderVertrag("Versicherung", "Absicherung", 114.00, 6,
-                monatsStart.plusMonths(2).withDayOfMonth(10)));
-
-        return vertraege;
-    }
-
-    private void zeigeVertraege(List<LaufenderVertrag> alleVertraege) {
+    private void zeigeVertraege(VertragsAnalyseDaten daten) {
         LocalDate heute = LocalDate.now();
         int aktuellerMonat = heute.getMonthValue();
         int aktuellesJahr = heute.getYear();
@@ -98,8 +76,6 @@ public class AnalyseFragment extends Fragment {
         tvAnalyseMonth.setText("Laufende Verträge für " + heute.getMonth().getDisplayName(
                 java.time.format.TextStyle.FULL, Locale.GERMANY) + " " + aktuellesJahr);
 
-        GetLaufendeVertraegeUseCase useCase = new GetLaufendeVertraegeUseCase();
-        VertragsAnalyseDaten daten = useCase.ausfuehren(alleVertraege, aktuellerMonat, aktuellesJahr);
 
         tvCurrentContractTotal.setText(currencyFormat.format(daten.getAktuellerGesamtbetrag()));
         tvContractCount.setText(daten.getAktuelleVertraege().size() + " Verträge in diesem Monat");

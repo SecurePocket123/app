@@ -13,6 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.finance.data.model.Sparziel;
+import com.example.finance.viewmodel.SparzieleViewModel;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -50,9 +54,14 @@ public class SparzieleFragment extends Fragment {
         etGoal.addTextChangedListener(watcher);
         etSaved.addTextChangedListener(watcher);
 
-        // Startwerte (optional) -> mit Code Automatisieren
-        etGoal.setText("4000");
-        etSaved.setText("3000");
+        SparzieleViewModel viewModel = new ViewModelProvider(this).get(SparzieleViewModel.class);
+        Sparziel sparziel = viewModel.getAktuellesSparziel();
+
+        if (sparziel != null) {
+            etGoal.setText(String.valueOf(sparziel.getZielbetrag()));
+            etSaved.setText(String.valueOf(sparziel.getAktuellerBetrag()));
+        }
+
         updateUI();
     }
 
