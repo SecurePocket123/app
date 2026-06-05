@@ -4,8 +4,11 @@ import com.example.finance.data.model.Ausgaben;
 import com.example.finance.data.model.Einkommen;
 import com.example.finance.data.model.Kategorie;
 import com.example.finance.data.model.Sparziel;
+import com.example.finance.data.model.Zahlung;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -14,6 +17,9 @@ import java.util.List;
  */
 public class FinanceRepositoryImpl implements FinanceRepository {
 
+    private long nextPaymentId = 1;
+    private long nextKategorieId = 1;
+
     private List<Einkommen> einkommenListe = new ArrayList<>();
     private List<Ausgaben> ausgabenListe = new ArrayList<>();
     private List<Kategorie> kategorienListe = new ArrayList<>();
@@ -21,16 +27,19 @@ public class FinanceRepositoryImpl implements FinanceRepository {
 
     @Override
     public void addEinkommen(Einkommen einkommen) {
+        einkommen.setId(nextPaymentId++);
         einkommenListe.add(einkommen);
     }
 
     @Override
     public void addAusgaben(Ausgaben ausgaben) {
+        ausgaben.setId(nextPaymentId++);
         ausgabenListe.add(ausgaben);
     }
 
     @Override
     public void addKategorie(Kategorie kategorie) {
+        kategorie.setId(nextKategorieId++);
         kategorienListe.add(kategorie);
     }
 
@@ -68,6 +77,44 @@ public class FinanceRepositoryImpl implements FinanceRepository {
     }
 
     @Override
+    public List<Zahlung> getZahlungen(int monat, int jahr) {
+        List<Zahlung> zahlungen = new ArrayList<>();
+
+        for (Einkommen einkommen : getEinkommen(monat, jahr)) {
+            zahlungen.add(new Zahlung(
+                    einkommen.getId(),
+                    einkommen.getKategorieId(),
+                    getKategorieName(einkommen.getKategorieId()),
+                    einkommen.getBeschreibung(),
+                    einkommen.getDatum(),
+                    einkommen.getBetrag(),
+                    true
+            ));
+        }
+
+        for (Ausgaben ausgabe : getAusgaben(monat, jahr)) {
+            zahlungen.add(new Zahlung(
+                    ausgabe.getId(),
+                    ausgabe.getKategorieId(),
+                    getKategorieName(ausgabe.getKategorieId()),
+                    ausgabe.getBeschreibung(),
+                    ausgabe.getDatum(),
+                    ausgabe.getBetrag(),
+                    false
+            ));
+        }
+
+        Collections.sort(zahlungen, new Comparator<Zahlung>() {
+            @Override
+            public int compare(Zahlung zahlung1, Zahlung zahlung2) {
+                return Long.compare(zahlung2.getId(), zahlung1.getId());
+            }
+        });
+
+        return zahlungen;
+    }
+
+    @Override
     public List<Kategorie> getKategorien() {
         return kategorienListe;
     }
@@ -75,5 +122,14 @@ public class FinanceRepositoryImpl implements FinanceRepository {
     @Override
     public List<Sparziel> getSparziele() {
         return sparzieleListe;
+    }
+
+    private String getKategorieName(long kategorieId) {
+        for (Kategorie kategorie : kategorienListe) {
+            if (kategorie.getId() == kategorieId) {
+                return kategorie.getName();
+            }
+        }
+        return "Kategorie " + kategorieId;
     }
 }
