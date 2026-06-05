@@ -67,11 +67,15 @@ public class UebersichtFragment extends Fragment {
         DashboardDaten daten = viewModel.getDashboardDaten();
         NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.GERMANY);
 
+        TextView balanceTitle = view.findViewById(R.id.tv_balance_title);
         TextView balance = view.findViewById(R.id.tv_balance_value);
+        TextView lastTxTitle = view.findViewById(R.id.tv_last_tx_title);
         TextView lastTx = view.findViewById(R.id.tv_last_tx_value);
+
+        balanceTitle.setText("Aktuelle Bilanz");
         balance.setText(currency.format(daten.getKontostand()));
-        lastTx.setText("Einnahmen " + currency.format(daten.getGesamteinnahmen())
-                + " / Ausgaben " + currency.format(daten.getGesamtausgaben()));
+        lastTxTitle.setText("Ausgaben");
+        lastTx.setText("- " + currency.format(daten.getGesamtausgaben()));
 
         TabLayout tabs = view.findViewById(R.id.tabs_period);
         ViewPager2 pager = view.findViewById(R.id.pager_period);
