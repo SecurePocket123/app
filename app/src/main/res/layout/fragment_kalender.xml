@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
     android:background="#1976D2">
 
     <TextView
         android:id="@+id/tvKalenderTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Kalender"
         android:textColor="@android:color/white"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardCalendarHeader"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="#155FA0">
+        app:cardBackgroundColor="#155FA0"
+        app:layout_constraintTop_toBottomOf="@id/tvKalenderTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -144,18 +150,22 @@
                     android:text="So"
                     android:textColor="#CCFFFFFF" />
             </LinearLayout>
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardCalendarBody"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginTop="14dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="#155FA0">
+        app:cardBackgroundColor="#155FA0"
+        app:layout_constraintTop_toBottomOf="@id/cardCalendarHeader"
+        app:layout_constraintBottom_toTopOf="@id/tvSelectedDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerCalendar"
@@ -163,46 +173,20 @@
             android:layout_height="match_parent"
             android:padding="8dp"
             android:clipToPadding="false" />
+
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tvSelectedDate"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:text="Ausgewählter Tag:"
         android:textColor="@android:color/white"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardSelectedPayments"
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_marginTop="8dp"
-        app:cardCornerRadius="18dp"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="#155FA0">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:id="@+id/layoutSelectedDayPayments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="14dp">
-
-                <TextView
-                    android:id="@+id/tvEmptySelectedDayPayments"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Keine Zahlungen an diesem Tag"
-                    android:textColor="#CCFFFFFF"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </ScrollView>
-    </com.google.android.material.card.MaterialCardView>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
