@@ -10,8 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.finance.viewmodel.KalenderViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class KalenderFragment extends Fragment {
     private Calendar today;
 
     private CalendarAdapter calendarAdapter;
+    private KalenderViewModel viewModel;
 
     @Nullable
     @Override
@@ -50,9 +54,10 @@ public class KalenderFragment extends Fragment {
         ImageButton btnPrevYear = view.findViewById(R.id.btnPrevYear);
         ImageButton btnNextYear = view.findViewById(R.id.btnNextYear);
 
+        viewModel = new ViewModelProvider(this).get(KalenderViewModel.class);
         today = Calendar.getInstance();
         currentMonth = Calendar.getInstance();
-        selectedDate = Calendar.getInstance();
+        selectedDate = viewModel.getSelectedDate();
 
         recyclerCalendar.setLayoutManager(new GridLayoutManager(requireContext(), 7));
 
@@ -87,6 +92,7 @@ public class KalenderFragment extends Fragment {
 
         calendarAdapter = new CalendarAdapter(days, selectedDate, today, day -> {
             selectedDate = (Calendar) day.getDate().clone();
+            viewModel.setSelectedDate(selectedDate);
             SimpleDateFormat selectedFormat = new SimpleDateFormat("dd. MMMM yyyy", Locale.GERMAN);
             tvSelectedDate.setText("Ausgewählter Tag: " + capitalize(selectedFormat.format(selectedDate.getTime())));
             updateCalendar();

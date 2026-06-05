@@ -1,16 +1,23 @@
 package com.example.finance;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 import androidx.viewpager2.widget.ViewPager2;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import com.example.finance.domain.calculator.DashboardDaten;
+import com.example.finance.viewmodel.UebersichtViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
 public class UebersichtFragment extends Fragment {
@@ -55,6 +62,16 @@ public class UebersichtFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        UebersichtViewModel viewModel = new ViewModelProvider(this).get(UebersichtViewModel.class);
+        DashboardDaten daten = viewModel.getDashboardDaten();
+        NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+
+        TextView balance = view.findViewById(R.id.tv_balance_value);
+        TextView lastTx = view.findViewById(R.id.tv_last_tx_value);
+        balance.setText(currency.format(daten.getKontostand()));
+        lastTx.setText("Einnahmen " + currency.format(daten.getGesamteinnahmen())
+                + " / Ausgaben " + currency.format(daten.getGesamtausgaben()));
 
         TabLayout tabs = view.findViewById(R.id.tabs_period);
         ViewPager2 pager = view.findViewById(R.id.pager_period);
