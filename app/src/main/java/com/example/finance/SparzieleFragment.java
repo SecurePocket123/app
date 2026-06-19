@@ -1,8 +1,6 @@
 package com.example.finance;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +17,14 @@ import java.util.Locale;
 
 public class SparzieleFragment extends Fragment {
 
+    private static final String KEY_GOAL = "goal_target";
+    private static final String KEY_SAVED = "goal_saved";
+
     private EditText etGoal, etSaved;
     private ProgressBar progressRing;
     private TextView tvCenterValue, tvCenterPercent;
+
+    private AppStorage storage;
 
     private final NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.GERMANY);
 
@@ -41,19 +44,29 @@ public class SparzieleFragment extends Fragment {
         tvCenterValue = view.findViewById(R.id.tv_center_value);
         tvCenterPercent = view.findViewById(R.id.tv_center_percent);
 
-        TextWatcher watcher = new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override public void afterTextChanged(Editable s) { updateUI(); }
-        };
+        storage = AppStorage.getInstance(requireContext());
 
-        etGoal.addTextChangedListener(watcher);
-        etSaved.addTextChangedListener(watcher);
+        /*
+         * Beide Felder werden direkt an die zentrale Speicherung gebunden.
+         * Beim Laden werden vorhandene Werte gesetzt,
+         * beim Verlassen des Feldes werden Änderungen gespeichert.
+         */
+        storage.bindInput(etGoal, KEY_GOAL, "", this::updateUI);
+        storage.bindInput(etSaved, KEY_SAVED, "", this::updateUI);
+    }
 
-        // Startwerte (optional) -> mit Code Automatisieren
-        etGoal.setText("4000");
-        etSaved.setText("3000");
-        updateUI();
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        /*
+         * Zusätzliche Sicherheit:
+         * Beim Verlassen des Fragments werden beide Werte nochmals gespeichert.
+         */
+        if (storage != null) {
+            storage.saveInput(etGoal, KEY_GOAL);
+            storage.saveInput(etSaved, KEY_SAVED);
+        }
     }
 
     private void updateUI() {
@@ -72,7 +85,6 @@ public class SparzieleFragment extends Fragment {
 
         double percent = (saved / goal) * 100.0;
         int progress = (int) Math.round(percent);
-
         double remaining = goal - saved;
 
         progressRing.setProgress(progress);
@@ -82,8 +94,11 @@ public class SparzieleFragment extends Fragment {
 
     private double parseDouble(String input) {
         if (input == null) return 0;
+
         input = input.trim().replace(",", ".");
+
         if (input.isEmpty()) return 0;
+
         try {
             return Double.parseDouble(input);
         } catch (Exception e) {

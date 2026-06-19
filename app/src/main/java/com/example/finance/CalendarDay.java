@@ -6,10 +6,12 @@ public class CalendarDay {
 
     private final Calendar date;
     private final boolean currentMonth;
+    private final boolean hasTransactions;
 
-    public CalendarDay(Calendar date, boolean currentMonth) {
+    public CalendarDay(Calendar date, boolean currentMonth, boolean hasTransactions) {
         this.date = date;
         this.currentMonth = currentMonth;
+        this.hasTransactions = hasTransactions;
     }
 
     public Calendar getDate() {
@@ -18,5 +20,9 @@ public class CalendarDay {
 
     public boolean isCurrentMonth() {
         return currentMonth;
+    }
+
+    public boolean hasTransactions() {
+        return hasTransactions;
     }
 }

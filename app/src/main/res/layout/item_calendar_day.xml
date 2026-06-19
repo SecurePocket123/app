@@ -14,4 +14,13 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
+    <View
+        android:id="@+id/viewTransactionDot"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/bg_calendar_today"
+        android:visibility="invisible" />
+
 </FrameLayout>
